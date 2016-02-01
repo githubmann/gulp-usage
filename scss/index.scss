@@ -1,0 +1,79 @@
+// 这里声明了一个函数（一般有结构化的css样式可声明为一个函数便以复用）
+// 该函数实现的效果是悬停 background的改变
+@mixin toolbar-item($pos,$hoverPos){
+   background-position: 0 $pos;
+  &:hover {
+    background-position: 0 $hoverPos;
+  }  
+
+}
+$toolbar-size: 52px; //将经常变化的值设置为变量，方便修改
+//在sass中分组用逗号
+.toolbar-item,.toolbar-layer{
+  background-image: url('../img/toolbar.png');
+}
+.toolbar{
+  position: fixed;
+  left: 50%;
+  bottom: 5px;
+  margin-left: -$toolbar-size / 2;//操作符两边需要空格
+
+}
+// 公共样式
+.toolbar-item{
+  position: relative;
+  display: block;
+  width: $toolbar-size;
+  height: $toolbar-size;
+  //background-image默认是repeat
+  
+  background-repeat: no-repeat;
+  margin-top: 1px;
+  transition: background-position 1s;
+  &:hover {
+    .toolbar-layer {
+      opacity:1;
+      transform: scale(1);
+    }
+
+  }
+  
+}
+.toolbar-item-weixin{
+  // background-position 控制着image
+  @include toolbar-item(-798px,-860px);
+  .toolbar-layer {
+      height: 212px;
+      background-position: 0 0px;
+  }
+}
+.toolbar-item-feedback{
+ 
+  @include toolbar-item(-426px,-488px);
+
+}
+.toolbar-item-app{
+ 
+  @include toolbar-item(-550px,-612px);
+  .toolbar-layer {
+    height: 194px;
+    background-position: 0 -222px;
+  }
+
+}
+.toolbar-item-top{
+ 
+  @include toolbar-item(-674px,-736px);
+}
+.toolbar-layer{
+  position: absolute;
+  right: $toolbar-size - 6;//6没有px
+  width: 172px;
+  bottom:-10px;
+  background-repeat: no-repeat;
+  opacity: 0;
+  //transform 的变化基准点默认是中心
+  transform-origin: 95% 95%;//两个值接受bottom left right top 和百分比
+  transform: scale(0.01);
+  transition: all  1s;
+}
