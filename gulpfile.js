@@ -2,7 +2,7 @@
 * @Author: 波
 * @Date:   2016-02-01 22:34:24
 * @Last Modified by:   波
-* @Last Modified time: 2016-02-01 23:54:49
+* @Last Modified time: 2016-02-01 23:59:44
 */
 
 var gulp = require('gulp');
@@ -28,8 +28,9 @@ gulp.task('browserSync',['sass'],function  () {
 })
 gulp.task('watch',function  () {
   gulp.watch('scss/*.scss',['sass']);
-  gulp.watch('*.html',function  () {
+  gulp.watch('*.html',function  (event) {
     browserSync.reload();
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   })
 })  
 gulp.task('default',['browserSync','watch']);
