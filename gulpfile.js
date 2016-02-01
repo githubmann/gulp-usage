@@ -2,12 +2,12 @@
 * @Author: 波
 * @Date:   2016-02-01 22:34:24
 * @Last Modified by:   波
-* @Last Modified time: 2016-02-01 23:20:45
+* @Last Modified time: 2016-02-01 23:36:00
 */
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var broswerSync = require('broswer-sync');
+var browser = require('browser-sync');
 //sass静态任务
 //你的任务是否在这些前置依赖的任务完成之前运行了？
 //请一定要确保你所依赖的任务列表中的任务都使用了正确的异步执行方式：
@@ -17,14 +17,15 @@ gulp.task('sass',function  () {
       .pipe(sass())
       .pipe(gulp.dest('./css/'));//如果css不存在会自动创建
 })
-//broswerSync静态任务
-gulp.task('broswerSync',['sass'],function  () {
-  broswerSync({
+//browser静态任务
+gulp.task('browser',['sass'],function  () {
+  browser({
     server:{
       baseDir:'./'
     }
   })
 })
 gulp.task('watch',function  () {
-  gulp.watch('scss/*.scss',['sass']);
-})
+  gulp.watch(['scss/*.scss','*.html'],['sass']);
+});
+gulp.task('default',['browser','watch']);
